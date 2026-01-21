@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Validation Tool - MLBB Meta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-s {
+            background: #ff4757;
+            color: white;
+        }
+
+        .badge-a {
+            background: #ffa502;
+            color: white;
+        }
+
+        .badge-b {
+            background: #2e86de;
+            color: white;
+        }
+
+        .badge-c {
+            background: #a29bfe;
+            color: white;
+        }
+
+        .badge-tank {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-fighter {
+            background: #e67e22;
+            color: white;
+        }
+
+        .badge-assassin {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-mage {
+            background: #3498db;
+            color: white;
+        }
+
+        .badge-marksman {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-support {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-ok {
+            background: #2ecc71;
+        }
+
+        .status-error {
+            background: #e74c3c;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Data Validation Tool</h1>
+        <p class="subtitle">MLBB Meta Tier List - Quality Assurance</p>
+
+        <div id="alerts"></div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Heroes</h3>
+                <div class="number" id="totalHeroes">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>S Tier</h3>
+                <div class="number" id="sTier">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>A Tier</h3>
+                <div class="number" id="aTier">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>B Tier</h3>
+                <div class="number" id="bTier">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>C Tier</h3>
+                <div class="number" id="cTier">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Data Issues</h3>
+                <div class="number" id="issues">-</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Hero Distribution by Role</h2>
+            <table id="roleTable">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>S Tier</th>
+                        <th>A Tier</th>
+                        <th>B Tier</th>
+                        <th>C Tier</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>⚠️ Data Validation Results</h2>
+            <div id="validationResults"></div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Complete Hero List (Sortable)</h2>
+            <table id="heroTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Hero Name</th>
+                        <th>Role</th>
+                        <th>Tier</th>
+                        <th>Image Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="actions">
+            <button class="btn" onclick="location.reload()">🔄 Refresh Data</button>
+            <a href="index.html" class="btn">🏠 Back to Main Site</a>
+            <button class="btn" onclick="exportReport()">📥 Export Report</button>
+        </div>
+    </div>
+
+    <script>
+        let heroData = null;
+        let allHeroes = [];
+
+        async function loadAndValidateData() {
+            try {
+                // Load hero_data.json
+                const response = await fetch('hero_data.json');
+                heroData = await response.json();
+
+                // Convert to flat array
+                allHeroes = [];
+                for (const [role, heroes] of Object.entries(heroData.heroes)) {
+                    heroes.forEach(hero => {
+                        allHeroes.push({ ...hero, role });
+                    });
+                }
+
+                // Update stats
+                updateStatistics();
+                updateRoleDistribution();
+                validateData();
+                populateHeroTable();
+
+            } catch (error) {
+                showAlert('Error loading data: ' + error.message, 'error');
+            }
+        }
+
+        function updateStatistics() {
+            const tierCounts = {
+                S: allHeroes.filter(h => h.tier === 'S').length,
+                A: allHeroes.filter(h => h.tier === 'A').length,
+                B: allHeroes.filter(h => h.tier === 'B').length,
+                C: allHeroes.filter(h => h.tier === 'C').length
+            };
+
+            document.getElementById('totalHeroes').textContent = allHeroes.length;
+            document.getElementById('sTier').textContent = tierCounts.S;
+            document.getElementById('aTier').textContent = tierCounts.A;
+            document.getElementById('bTier').textContent = tierCounts.B;
+            document.getElementById('cTier').textContent = tierCounts.C;
+        }
+
+        function updateRoleDistribution() {
+            const roles = ['Tank', 'Fighter', 'Assassin', 'Mage', 'Marksman', 'Support'];
+            const tbody = document.querySelector('#roleTable tbody');
+            tbody.innerHTML = '';
+
+            roles.forEach(role => {
+                const roleHeroes = allHeroes.filter(h => h.role === role);
+                const tierCounts = {
+                    S: roleHeroes.filter(h => h.tier === 'S').length,
+                    A: roleHeroes.filter(h => h.tier === 'A').length,
+                    B: roleHeroes.filter(h => h.tier === 'B').length,
+                    C: roleHeroes.filter(h => h.tier === 'C').length
+                };
+
+                const row = `
+                    <tr>
+                        <td><span class="badge badge-${role.toLowerCase()}">${role}</span></td>
+                        <td>${tierCounts.S}</td>
+                        <td>${tierCounts.A}</td>
+                        <td>${tierCounts.B}</td>
+                        <td>${tierCounts.C}</td>
+                        <td><strong>${roleHeroes.length}</strong></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function validateData() {
+            const issues = [];
+            let issueCount = 0;
+
+            // Check for duplicate names
+            const names = allHeroes.map(h => h.name);
+            const duplicates = names.filter((name, index) => names.indexOf(name) !== index);
+            if (duplicates.length > 0) {
+                issues.push({ type: 'error', message: `Duplicate hero names found: ${[...new Set(duplicates)].join(', ')}` });
+                issueCount += duplicates.length;
+            }
+
+            // Check for missing tier
+            const noTier = allHeroes.filter(h => !h.tier);
+            if (noTier.length > 0) {
+                issues.push({ type: 'error', message: `${noTier.length} heroes without tier information` });
+                issueCount += noTier.length;
+            }
+
+            // Check for invalid tier
+            const invalidTier = allHeroes.filter(h => !['S', 'A', 'B', 'C'].includes(h.tier));
+            if (invalidTier.length > 0) {
+                issues.push({ type: 'error', message: `${invalidTier.length} heroes with invalid tier` });
+                issueCount += invalidTier.length;
+            }
+
+            // Check for placeholder images
+            const placeholders = allHeroes.filter(h => h.image.includes('placeholder'));
+            if (placeholders.length > 0) {
+                issues.push({ type: 'warning', message: `${placeholders.length} heroes still using placeholder images` });
+                issueCount += placeholders.length;
+            }
+
+            document.getElementById('issues').textContent = issueCount;
+
+            // Display results
+            const resultsDiv = document.getElementById('validationResults');
+            if (issues.length === 0) {
+                resultsDiv.innerHTML = '<div class="alert alert-success"><span class="status status-ok"></span>✅ All data validation checks passed! No issues found.</div>';
+                showAlert('Data validation successful! All checks passed.', 'success');
+            } else {
+                let html = '';
+                issues.forEach(issue => {
+                    const alertClass = issue.type === 'error' ? 'alert-error' : 'alert-warning';
+                    const icon = issue.type === 'error' ? '❌' : '⚠️';
+                    html += `<div class="alert ${alertClass}">${icon} ${issue.message}</div>`;
+                });
+                resultsDiv.innerHTML = html;
+            }
+        }
+
+        function populateHeroTable() {
+            const tbody = document.querySelector('#heroTable tbody');
+            tbody.innerHTML = '';
+
+            allHeroes.forEach((hero, index) => {
+                const imageStatus = hero.image.includes('placeholder') ?
+                    '<span class="status status-error"></span>Placeholder' :
+                    '<span class="status status-ok"></span>Valid';
+
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${hero.name}</strong></td>
+                        <td><span class="badge badge-${hero.role.toLowerCase()}">${hero.role}</span></td>
+                        <td><span class="badge badge-${hero.tier.toLowerCase()}">${hero.tier}</span></td>
+                        <td>${imageStatus}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function showAlert(message, type) {
+            const alertsDiv = document.getElementById('alerts');
+            const alertClass = type === 'success' ? 'alert-success' : (type === 'warning' ? 'alert-warning' : 'alert-error');
+            const alert = `<div class="alert ${alertClass}">${message}</div>`;
+            alertsDiv.innerHTML = alert;
+
+            setTimeout(() => {
+                alertsDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        function exportReport() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                patch: heroData.patch,
+                statistics: {
+                    total: allHeroes.length,
+                    byTier: {
+                        S: allHeroes.filter(h => h.tier === 'S').length,
+                        A: allHeroes.filter(h => h.tier === 'A').length,
+                        B: allHeroes.filter(h => h.tier === 'B').length,
+                        C: allHeroes.filter(h => h.tier === 'C').length
+                    }
+                },
+                heroes: allHeroes
+            };
+
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mlbb-validation-report-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showAlert('Report exported successfully!', 'success');
+        }
+
+        // Load data on page load
+        loadAndValidateData();
+    </script>
+</body>
+
+</html>

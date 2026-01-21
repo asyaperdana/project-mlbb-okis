@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hero Image Verification</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #1a1a1a;
+            color: white;
+            padding: 20px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .hero-item {
+            background: #333;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .hero-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .hero-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .hero-role {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hero Image Verification</h1>
+    <div id="grid" class="hero-grid"></div>
+
+    <script>
+        const heroes = [
+            { name: 'Sora', role: 'Fighter', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage_2_1_40/100_4749a1f7fe99cbedfc5ef23fc1287d6c.png' },
+            { name: 'Obsidia', role: 'Marksman', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage_2_1_18/100_92bcc9ad2c4c8165a888d34f086a4d28.png' },
+            { name: 'Zhuxin', role: 'Mage', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage_92/100_13cfeec4bec7a27a09677e519f1ef9d2.png' },
+            { name: 'Gloo', role: 'Tank', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage_1_9_642/100_8b401d50920f2359060a9c7a3c833df1.png' },
+            { name: 'Julian', role: 'Fighter', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_44891c699fb1c00fc4a7fa59ea95b8b3.png' },
+            { name: 'Ixia', role: 'Marksman', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_c5f758bd1141327d36f2c77928268ab7.png' },
+            { name: 'Harith', role: 'Mage', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_0f81a3d82eb05c2c062fc6ea8b3d6578.png' },
+            { name: 'Diggie', role: 'Support', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_7a7a688cf1562a124f7183b2c2957608.png' },
+            { name: 'Claude', role: 'Marksman', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_808e898e89986b917e146a9b5dcbbb57.png' },
+            { name: 'Minotaur', role: 'Tank', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_cf2794cfdbea9a75784133863cf6ac83.png' },
+            { name: 'Hayabusa', role: 'Assassin', tier: 'S', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_63cb1f44bf906b71767a000e38d8ab14.png' },
+            { name: 'Valentina', role: 'Mage', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_7923ebf470d0e963e9978cb21eb25780.png' },
+            { name: 'Popol and Kupa', role: 'Marksman', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_5eb4653a13ff08c8f4138dc38ae4e110.png' },
+            { name: 'Tigreal', role: 'Tank', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_d3ef9fa051f8643b1345accd72c48abf.png' },
+            { name: 'Estes', role: 'Support', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_71c31e9801e7d1b40604d54099b30054.png' },
+            { name: 'Thamuz', role: 'Fighter', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage_2_1_18/100_3e7e133556af2f5d82f49fa8624b6bd5.png' },
+            { name: 'Luo Yi', role: 'Mage', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_74fe63bd31cc092aed923543a115b7bd.png' },
+            { name: 'Beatrix', role: 'Marksman', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_c1acd7cbd828f0c5d291e48a0f7c018d.png' },
+            { name: 'Esmeralda', role: 'Mage', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_f684768281faab70dea48d06fb72979e.png' },
+            { name: 'Chou', role: 'Fighter', tier: 'A', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_634196d9234babcc3072155d4fefaf0c.png' },
+            { name: 'Odette', role: 'Mage', tier: 'B', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_ee4f9ddb2f82ef0dfc99bb72e0a8f557.png' },
+            { name: 'Miya', role: 'Marksman', tier: 'B', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_32c0d9d3a727a9052754296af6251435.png' },
+            { name: 'Belerick', role: 'Tank', tier: 'B', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_69fdf773b92fbbf182f83d79abcf8d01.png' },
+            { name: 'Rafaela', role: 'Support', tier: 'B', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_ffb96ce8d57c9987401f9c5bfebee3b2.png' },
+            { name: 'Alucard', role: 'Fighter', tier: 'B', image: 'https://akmweb.youngjoygame.com/web/svnres/img/mlbb/homepage/100_4e0005dbfb1376beaccc54ef7aa39375.png' },
+        ];
+
+        const grid = document.getElementById('grid');
+        heroes.forEach(hero => {
+            const div = document.createElement('div');
+            div.className = 'hero-item';
+            div.innerHTML = `
+                <img src="${hero.image}" alt="${hero.name}">
+                <div class="hero-name">${hero.name}</div>
+                <div class="hero-role">${hero.role}</div>
+            `;
+            grid.appendChild(div);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLBB Meta 2026 | Dominate the Dawn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-mesh"></div>
+
+    <header class="navbar">
+        <div class="logo">META<span class="highlight">LEGENDS</span></div>
+        <nav>
+            <a href="#tier-list">Tier List</a>
+            <a href="#patch-notes">Patch 2.1.52</a>
+            <a href="#guides">Guides</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="status-indicator">
+                    <span class="dot"></span>
+                    <span class="status-text">LIVE META UPDATED</span>
+                </div>
+                <span class="badge">SEASON 31 | PATCH 2.1.52</span>
+                <h1>DOMINATE THE <br><span class="text-gradient">LAND OF DAWN</span></h1>
+                <p>Stay ahead of the competition with the most accurate and data-driven hero tier list for 2026.</p>
+                <div class="hero-btns">
+                    <a href="#tier-list" class="cta-button">VIEW TIER LIST</a>
+                    <a href="#patch-notes" class="secondary-btn">PATCH NOTES</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Placeholder for Hero Image (e.g., Aulus Revamp) -->
+                <div class="hero-placeholder glow-effect"></div>
+            </div>
+        </section>
+
+        <section id="tier-list" class="tier-section">
+            <h2>META TIER LIST</h2>
+            <div class="filters-container">
+                <div class="search-wrapper">
+                    <input type="text" id="heroSearch" placeholder="Search hero...">
+                    <i class="search-icon">🔍</i>
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">ALL</button>
+                    <button class="filter-btn" data-filter="Tank">TANK</button>
+                    <button class="filter-btn" data-filter="Fighter">FIGHTER</button>
+                    <button class="filter-btn" data-filter="Assassin">ASSASSIN</button>
+                    <button class="filter-btn" data-filter="Mage">MAGE</button>
+                    <button class="filter-btn" data-filter="Marksman">MARKSMAN</button>
+                    <button class="filter-btn" data-filter="Support">SUPPORT</button>
+                </div>
+            </div>
+
+            <div class="tier-container">
+                <!-- Tier Rows injected by JS -->
+            </div>
+        </section>
+
+        <!-- Hero Detail Modal -->
+        <div id="heroModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <div class="modal-image-container">
+                        <img id="modalHeroImage" src="" alt="Hero">
+                        <div class="modal-tier-badge" id="modalHeroTier">S</div>
+                    </div>
+                    <div class="modal-info">
+                        <h2 id="modalHeroName">Hero Name</h2>
+                        <span id="modalHeroRole" class="role-badge">Fighter</span>
+                        <div class="modal-stats">
+                            <div class="stat-box">
+                                <span class="stat-label">Win Rate</span>
+                                <span class="stat-value">54.2%</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Pick Rate</span>
+                                <span class="stat-value">2.1%</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-label">Ban Rate</span>
+                                <span class="stat-value">15.4%</span>
+                            </div>
+                        </div>
+                        <p class="modal-desc">
+                            Currently one of the strongest picks in the Mythical Glory meta.
+                            Exceptions apply based on team composition.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="patch-notes" class="patch-section">
+            <h2>PATCH 2.1.52 HIGHLIGHTS</h2>
+            <div class="patch-grid">
+                <div class="patch-card">
+                    <h3>AULUS REVAMPED</h3>
+                    <p>New mobility skill and reworked ultimate for better pursuit.</p>
+                </div>
+                <div class="patch-card">
+                    <h3>OBSIDIA ADJUSTED</h3>
+                    <p>Attack speed build buffed. Bone Shard speed increased.</p>
+                </div>
+                <div class="patch-card">
+                    <h3>SORA NERF</h3>
+                    <p>Ultimate cooldown adjusted to balance CC dominance.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 MetaLegends. Fan made project. Not affiliated with Moonton.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
